@@ -1,0 +1,9 @@
+{
+	"name": "mytestingdatafactory203",
+	"location": "westus3",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f7e35caa-c69f-4ec0-bac6-1fa33753240d",
+		"tenantId": "8e9f3a45-f5bc-4f2a-a2cb-e610a843e192"
+	}
+}
