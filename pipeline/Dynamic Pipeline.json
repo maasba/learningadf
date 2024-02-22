@@ -27,6 +27,10 @@
 							"dsDbNme": {
 								"value": "@pipeline().parameters.pipDbName",
 								"type": "Expression"
+							},
+							"dsSrvrNme": {
+								"value": "@pipeline().parameters.pipSrvrNme",
+								"type": "Expression"
 							}
 						}
 					},
@@ -36,10 +40,12 @@
 		],
 		"parameters": {
 			"pipSrvrNme": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "sqltesta.database.windows.net"
 			},
 			"pipDbName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "AdventureWorks"
 			}
 		},
 		"annotations": []
