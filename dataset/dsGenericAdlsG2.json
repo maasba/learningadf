@@ -5,6 +5,14 @@
 			"referenceName": "lsAdlsG2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"serverName": {
+				"type": "string"
+			},
+			"databaseName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
