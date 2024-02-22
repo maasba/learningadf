@@ -22,12 +22,26 @@
 					},
 					"dataset": {
 						"referenceName": "dsGenericAzureSqlTable",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"dsDbNme": {
+								"value": "@pipeline().parameters.pipDbName",
+								"type": "Expression"
+							}
+						}
 					},
 					"firstRowOnly": false
 				}
 			}
 		],
+		"parameters": {
+			"pipSrvrNme": {
+				"type": "string"
+			},
+			"pipDbName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
