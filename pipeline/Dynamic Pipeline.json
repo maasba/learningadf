@@ -23,7 +23,8 @@
 					"dataset": {
 						"referenceName": "dsGenericAzureSql",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			}
 		],
