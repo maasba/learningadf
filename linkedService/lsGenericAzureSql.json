@@ -15,6 +15,7 @@
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=@{linkedService().lsSrvrName};initial catalog=@{linkedService().lsDbName};user id=maasba",
 			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEFEQ0EwQzg4LURCREItNEU1My1BODhDLTFDMEMxNTlEOTQ5Q18zYzNhY2JkYS0wNWQzLTQ5ZDctOTUwZC0xZTk0NTNjZjllNjEiDQp9"
-		}
+		},
+		"description": "Generic azure sql connector. It would get its connection properties from the data set at run time"
 	}
 }
