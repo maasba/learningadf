@@ -39,7 +39,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "iterate over tables",
 				"type": "ForEach",
 				"dependsOn": [
 					{
