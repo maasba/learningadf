@@ -15,15 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "dsGenericAzureSql",
-						"type": "DatasetReference"
-					},
 					"firstRowOnly": false
 				}
 			}
