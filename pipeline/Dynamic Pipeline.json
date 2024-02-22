@@ -79,7 +79,17 @@
 							"inputs": [
 								{
 									"referenceName": "dsGenericAzureSqlTable",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"dsDbNme": {
+											"value": "@pipeline().parameters.pipDbName",
+											"type": "Expression"
+										},
+										"dsSrvrNme": {
+											"value": "@pipeline().parameters.pipSrvrNme",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
