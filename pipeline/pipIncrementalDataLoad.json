@@ -42,6 +42,15 @@
 				"userProperties": []
 			}
 		],
+		"parameters": {
+			"pipDbNme": {
+				"type": "string"
+			},
+			"pipServerNme": {
+				"type": "string",
+				"defaultValue": "sqltesta.database.windows.net"
+			}
+		},
 		"annotations": []
 	}
 }
