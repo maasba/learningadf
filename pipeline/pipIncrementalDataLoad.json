@@ -1,7 +1,7 @@
 {
 	"name": "pipIncrementalDataLoad",
 	"properties": {
-		"description": "this is an example of how to do a ",
+		"description": "this is an example of how to do an incremental data load leveraging the watermark table strategy",
 		"annotations": []
 	}
 }
