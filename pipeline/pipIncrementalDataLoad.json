@@ -4,7 +4,8 @@
 		"description": "this is an example of how to do an incremental data load leveraging the watermark table strategy",
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "previous water mark",
+				"description": "look up the previous watermark",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -14,7 +15,18 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "dsGenericAzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
 			},
 			{
 				"name": "Lookup2",
