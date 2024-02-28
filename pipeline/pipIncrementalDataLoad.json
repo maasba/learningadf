@@ -19,7 +19,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT max(ModifiedDate) FROM [SalesLT].[SalesOrderDetail]",
+						"sqlReaderQuery": "SELECT max(latestProcessDate) as latestProcessDate  FROM [dbo].[tblWaterMark] where itemnme = '[SalesLT].[SalesOrderDetail]'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
