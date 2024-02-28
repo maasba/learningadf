@@ -24,8 +24,19 @@
 					},
 					"dataset": {
 						"referenceName": "dsGenericAzureSqlTable",
-						"type": "DatasetReference"
-					}
+						"type": "DatasetReference",
+						"parameters": {
+							"dsDbNme": {
+								"value": "@pipeline().parameters.pipDbNme",
+								"type": "Expression"
+							},
+							"dsSrvrNme": {
+								"value": "@pipeline().parameters.pipServerNme",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": true
 				}
 			},
 			{
@@ -44,7 +55,8 @@
 		],
 		"parameters": {
 			"pipDbNme": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "AdventureWorks"
 			},
 			"pipServerNme": {
 				"type": "string",
