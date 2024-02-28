@@ -41,17 +41,41 @@
 				}
 			},
 			{
-				"name": "Lookup2",
+				"name": "sales data new water mark",
+				"description": "look up the previous watermark for the sales data",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
-					"retry": 0,
+					"retry": 2,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT max(ModifiedDate) FROM [SalesLT].[SalesOrderDetail]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "dsGenericAzureSqlTable",
+						"type": "DatasetReference",
+						"parameters": {
+							"dsDbNme": {
+								"value": "@pipeline().parameters.pipDbNme",
+								"type": "Expression"
+							},
+							"dsSrvrNme": {
+								"value": "@pipeline().parameters.pipServerNme",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": true
+				}
 			}
 		],
 		"parameters": {
