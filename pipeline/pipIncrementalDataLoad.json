@@ -5,7 +5,7 @@
 		"activities": [
 			{
 				"name": "sales data previous water mark",
-				"description": "look up the previous watermark for the sales data",
+				"description": "look up the previous watermark for the sales data from the watermark table. ",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -42,7 +42,7 @@
 			},
 			{
 				"name": "sales data new water mark",
-				"description": "look up the previous watermark for the sales data",
+				"description": "look up the last record in the sales order detail table.. and get the last modified date.",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
