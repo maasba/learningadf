@@ -4,8 +4,8 @@
 		"description": "this is an example of how to do an incremental data load leveraging the watermark table strategy",
 		"activities": [
 			{
-				"name": "previous water mark",
-				"description": "look up the previous watermark",
+				"name": "sales data previous water mark",
+				"description": "look up the previous watermark for the sales data",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -19,6 +19,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT max(ModifiedDate) FROM [SalesLT].[SalesOrderDetail]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
