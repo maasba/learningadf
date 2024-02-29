@@ -29,7 +29,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@concat(dataset().serverName\n,'/'\n,dataset().databaseName\n,'/'\n,dataset().tableName\n,'/ingress'\n,'/year='\n,formatDateTime(utcnow(),'yyyy')\n,'/month='\n,formatDateTime(utcnow(),'MM')\n,'/day='\n,formatDateTime(utcnow(),'dd')\n)",
+					"value": "@concat(dataset().serverName\n,'/'\n,trim(\n            replace(\n                replace(dataset().databaseName,'[','')\n            ,']','')\n            )\n,'/'\n,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n,'/ingress'\n,'/year='\n,formatDateTime(utcnow(),'yyyy')\n,'/month='\n,formatDateTime(utcnow(),'MM')\n,'/day='\n,formatDateTime(utcnow(),'dd')\n)",
 					"type": "Expression"
 				},
 				"fileSystem": "raw"
