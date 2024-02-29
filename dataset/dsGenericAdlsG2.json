@@ -25,7 +25,7 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@dataset().tableName",
+					"value": "@concat(\n        trim(\n            replace(\n                replace(dataset().schemaName,'[','')\n                ,']','')\n                  )\n        ,'_'\n        ,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n        ,'.parquet')",
 					"type": "Expression"
 				},
 				"folderPath": {
