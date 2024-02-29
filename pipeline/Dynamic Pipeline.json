@@ -121,6 +121,14 @@
 										"serverName": {
 											"value": "@pipeline().parameters.pipSrvrNme",
 											"type": "Expression"
+										},
+										"databaseName": {
+											"value": "@pipeline().parameters.pipDbName",
+											"type": "Expression"
+										},
+										"schemaName": {
+											"value": "@item()",
+											"type": "Expression"
 										}
 									}
 								}
