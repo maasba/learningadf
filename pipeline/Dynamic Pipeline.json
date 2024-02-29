@@ -116,7 +116,13 @@
 							"outputs": [
 								{
 									"referenceName": "dsGenericAdlsG2",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"serverName": {
+											"value": "@pipeline().parameters.pipSrvrNme",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
