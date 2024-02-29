@@ -127,7 +127,11 @@
 											"type": "Expression"
 										},
 										"schemaName": {
-											"value": "@item()",
+											"value": "@item().schemaName",
+											"type": "Expression"
+										},
+										"tableName": {
+											"value": "@item().tableName",
 											"type": "Expression"
 										}
 									}
