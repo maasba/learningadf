@@ -477,11 +477,11 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": {
-							"value": "@dataset().tableName",
+							"value": "@concat(\n        trim(\n            replace(\n                replace(dataset().schemaName,'[','')\n                ,']','')\n                  )\n        ,'_'\n        ,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n        ,'.parquet')",
 							"type": "Expression"
 						},
 						"folderPath": {
-							"value": "@concat(dataset().serverName,'/',dataset().databaseName,'/',dataset().tableName,'/',utcnow('yyyy'),',',utcnow('mm'),',',utcnow('dd'))",
+							"value": "@concat(dataset().serverName\n,'/'\n,trim(\n            replace(\n                replace(dataset().databaseName,'[','')\n            ,']','')\n            )\n,'/'\n,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n,'/ingress'\n,'/year='\n,formatDateTime(utcnow(),'yyyy')\n,'/month='\n,formatDateTime(utcnow(),'MM')\n,'/day='\n,formatDateTime(utcnow(),'dd')\n)",
 							"type": "Expression"
 						},
 						"fileSystem": "raw"
