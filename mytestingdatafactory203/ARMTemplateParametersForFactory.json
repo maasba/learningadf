@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mytestingdatafactory203"
+		},
+		"azuresqlconn_connectionString": {
+			"value": ""
+		},
+		"dsGenericAzureSql_connectionString": {
+			"value": ""
+		},
+		"lsAdlsG2_accountKey": {
+			"value": ""
+		},
+		"lsAzureDb_connectionString": {
+			"value": ""
+		},
+		"lsGenericAzureSql_connectionString": {
+			"value": ""
+		},
+		"lsAdlsG2_properties_typeProperties_url": {
+			"value": "https://firstsgtest.dfs.core.windows.net/"
+		}
+	}
+}
