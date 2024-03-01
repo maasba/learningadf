@@ -151,7 +151,8 @@
 										]
 									},
 									{
-										"name": "update",
+										"name": "update the watermark table",
+										"description": "call the stored proc that updates the watermark table ",
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [
 											{
