@@ -181,7 +181,10 @@
 													"type": "DateTime"
 												},
 												"tableName": {
-													"value": "",
+													"value": {
+														"value": "@activity('Get a list of tables').output",
+														"type": "Expression"
+													},
 													"type": "String"
 												}
 											}
