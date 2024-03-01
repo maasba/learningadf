@@ -182,7 +182,7 @@
 												},
 												"tableName": {
 													"value": {
-														"value": "@activity('Get a list of tables').output",
+														"value": "item().tablename",
 														"type": "Expression"
 													},
 													"type": "String"
