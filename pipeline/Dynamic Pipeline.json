@@ -174,7 +174,10 @@
 											"storedProcedureName": "[dbo].[uspUpdateWaterMark]",
 											"storedProcedureParameters": {
 												"lastModifiedTime": {
-													"value": "",
+													"value": {
+														"value": "@utcnow()",
+														"type": "Expression"
+													},
 													"type": "DateTime"
 												},
 												"tableName": {
