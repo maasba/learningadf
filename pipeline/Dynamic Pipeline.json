@@ -140,7 +140,7 @@
 						},
 						{
 							"name": "check Load Type",
-							"description": "Look at the load type and ",
+							"description": "Look at the load type and do either an incremental or a full load",
 							"type": "IfCondition",
 							"dependsOn": [],
 							"userProperties": []
