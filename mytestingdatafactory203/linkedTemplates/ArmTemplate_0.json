@@ -462,6 +462,50 @@
 														}
 													}
 												]
+											},
+											{
+												"name": "update the watermark table",
+												"description": "call the stored proc that updates the watermark table ",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "full data COPY",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[[dbo].[uspUpdateWaterMark]",
+													"storedProcedureParameters": {
+														"lastModifiedTime": {
+															"value": {
+																"value": "@utcnow()",
+																"type": "Expression"
+															},
+															"type": "DateTime"
+														},
+														"tableName": {
+															"value": {
+																"value": "item().tablename",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												},
+												"linkedServiceName": {
+													"referenceName": "azuresqlconn",
+													"type": "LinkedServiceReference"
+												}
 											}
 										]
 									}
@@ -487,7 +531,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/dsGenericAzureSqlTable')]",
-				"[concat(variables('factoryId'), '/datasets/dsGenericAdlsG2')]"
+				"[concat(variables('factoryId'), '/datasets/dsGenericAdlsG2')]",
+				"[concat(variables('factoryId'), '/linkedServices/azuresqlconn')]"
 			]
 		},
 		{
