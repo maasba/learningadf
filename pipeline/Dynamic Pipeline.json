@@ -57,88 +57,6 @@
 					},
 					"activities": [
 						{
-							"name": "full data from tables",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "AzureSqlSource",
-									"sqlReaderQuery": {
-										"value": "@concat('SELECT * FROM ',item().schemaName,'.',item().tablename)",
-										"type": "Expression"
-									},
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"sink": {
-									"type": "ParquetSink",
-									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings"
-									},
-									"formatSettings": {
-										"type": "ParquetWriteSettings"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "dsGenericAzureSqlTable",
-									"type": "DatasetReference",
-									"parameters": {
-										"dsDbNme": {
-											"value": "@pipeline().parameters.pipDbName",
-											"type": "Expression"
-										},
-										"dsSrvrNme": {
-											"value": "@pipeline().parameters.pipSrvrNme",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "dsGenericAdlsG2",
-									"type": "DatasetReference",
-									"parameters": {
-										"serverName": {
-											"value": "@pipeline().parameters.pipSrvrNme",
-											"type": "Expression"
-										},
-										"databaseName": {
-											"value": "@pipeline().parameters.pipDbName",
-											"type": "Expression"
-										},
-										"schemaName": {
-											"value": "@item().schemaName",
-											"type": "Expression"
-										},
-										"tableName": {
-											"value": "@item().tableName",
-											"type": "Expression"
-										}
-									}
-								}
-							]
-						},
-						{
 							"name": "check Load Type",
 							"description": "Look at the load type and do either an incremental or a full load",
 							"type": "IfCondition",
@@ -151,7 +69,7 @@
 								},
 								"ifTrueActivities": [
 									{
-										"name": "check Load Type_copy1",
+										"name": "evaluate the  Load Type from watermark table",
 										"description": "Look at the load type and do either an incremental or a full load",
 										"type": "IfCondition",
 										"dependsOn": [],
@@ -163,7 +81,7 @@
 											},
 											"ifTrueActivities": [
 												{
-													"name": "Copy data1_copy1",
+													"name": "full data COPY",
 													"type": "Copy",
 													"dependsOn": [],
 													"policy": {
@@ -175,8 +93,74 @@
 													},
 													"userProperties": [],
 													"typeProperties": {
-														"enableStaging": false
-													}
+														"source": {
+															"type": "AzureSqlSource",
+															"sqlReaderQuery": {
+																"value": "@concat('SELECT * FROM ',item().schemaName,'.',item().tablename)",
+																"type": "Expression"
+															},
+															"queryTimeout": "02:00:00",
+															"partitionOption": "None"
+														},
+														"sink": {
+															"type": "ParquetSink",
+															"storeSettings": {
+																"type": "AzureBlobFSWriteSettings"
+															},
+															"formatSettings": {
+																"type": "ParquetWriteSettings"
+															}
+														},
+														"enableStaging": false,
+														"translator": {
+															"type": "TabularTranslator",
+															"typeConversion": true,
+															"typeConversionSettings": {
+																"allowDataTruncation": true,
+																"treatBooleanAsNumber": false
+															}
+														}
+													},
+													"inputs": [
+														{
+															"referenceName": "dsGenericAzureSqlTable",
+															"type": "DatasetReference",
+															"parameters": {
+																"dsDbNme": {
+																	"value": "@pipeline().parameters.pipDbName",
+																	"type": "Expression"
+																},
+																"dsSrvrNme": {
+																	"value": "@pipeline().parameters.pipSrvrNme",
+																	"type": "Expression"
+																}
+															}
+														}
+													],
+													"outputs": [
+														{
+															"referenceName": "dsGenericAdlsG2",
+															"type": "DatasetReference",
+															"parameters": {
+																"serverName": {
+																	"value": "@pipeline().parameters.pipSrvrNme",
+																	"type": "Expression"
+																},
+																"databaseName": {
+																	"value": "@pipeline().parameters.pipDbName",
+																	"type": "Expression"
+																},
+																"schemaName": {
+																	"value": "@item().schemaName",
+																	"type": "Expression"
+																},
+																"tableName": {
+																	"value": "@item().tableName",
+																	"type": "Expression"
+																}
+															}
+														}
+													]
 												}
 											]
 										}
