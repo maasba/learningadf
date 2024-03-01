@@ -57,7 +57,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT QUOTENAME(t.name) AS tableName, QUOTENAME(SCHEMA_NAME(t.schema_id)) AS schemaName from sys.tables as t",
+								"sqlReaderQuery": "select \nschemaName\n,tableName\n,loadType\n,latestProcessDate\n,fieldThatHasLastProcessDateInTable\n from dbo.tblWaterMark",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -97,86 +97,101 @@
 							},
 							"activities": [
 								{
-									"name": "Copy data from tables",
-									"type": "Copy",
+									"name": "check Load Type",
+									"description": "Look at the load type and do either an incremental or a full load",
+									"type": "IfCondition",
 									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
 									"userProperties": [],
 									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": {
-												"value": "@concat('SELECT * FROM ',item().schemaName,'.',item().tablename)",
-												"type": "Expression"
-											},
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
+										"expression": {
+											"value": "@equals(item().loadType,'FULL')",
+											"type": "Expression"
 										},
-										"sink": {
-											"type": "ParquetSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "ParquetWriteSettings"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "dsGenericAzureSqlTable",
-											"type": "DatasetReference",
-											"parameters": {
-												"dsDbNme": {
-													"value": "@pipeline().parameters.pipDbName",
-													"type": "Expression"
+										"ifTrueActivities": [
+											{
+												"name": "full data COPY",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "0.12:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
 												},
-												"dsSrvrNme": {
-													"value": "@pipeline().parameters.pipSrvrNme",
-													"type": "Expression"
-												}
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "@concat('SELECT * FROM ',item().schemaName,'.',item().tablename)",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"sink": {
+														"type": "ParquetSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														},
+														"formatSettings": {
+															"type": "ParquetWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"translator": {
+														"type": "TabularTranslator",
+														"typeConversion": true,
+														"typeConversionSettings": {
+															"allowDataTruncation": true,
+															"treatBooleanAsNumber": false
+														}
+													}
+												},
+												"inputs": [
+													{
+														"referenceName": "dsGenericAzureSqlTable",
+														"type": "DatasetReference",
+														"parameters": {
+															"dsDbNme": {
+																"value": "@pipeline().parameters.pipDbName",
+																"type": "Expression"
+															},
+															"dsSrvrNme": {
+																"value": "@pipeline().parameters.pipSrvrNme",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "dsGenericAdlsG2",
+														"type": "DatasetReference",
+														"parameters": {
+															"serverName": {
+																"value": "@pipeline().parameters.pipSrvrNme",
+																"type": "Expression"
+															},
+															"databaseName": {
+																"value": "@pipeline().parameters.pipDbName",
+																"type": "Expression"
+															},
+															"schemaName": {
+																"value": "@item().schemaName",
+																"type": "Expression"
+															},
+															"tableName": {
+																"value": "@item().tableName",
+																"type": "Expression"
+															}
+														}
+													}
+												]
 											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "dsGenericAdlsG2",
-											"type": "DatasetReference",
-											"parameters": {
-												"serverName": {
-													"value": "@pipeline().parameters.pipSrvrNme",
-													"type": "Expression"
-												},
-												"databaseName": {
-													"value": "@pipeline().parameters.pipDbName",
-													"type": "Expression"
-												},
-												"schemaName": {
-													"value": "@item().schemaName",
-													"type": "Expression"
-												},
-												"tableName": {
-													"value": "@item().tableName",
-													"type": "Expression"
-												}
-											}
-										}
-									]
+										]
+									}
 								}
 							]
 						}
@@ -477,7 +492,7 @@
 					"location": {
 						"type": "AzureBlobFSLocation",
 						"fileName": {
-							"value": "@concat(\n        trim(\n            replace(\n                replace(dataset().schemaName,'[','')\n                ,']','')\n                  )\n        ,'_'\n        ,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n        ,'.parquet')",
+							"value": "@concat(\n        trim(\n            replace(\n                replace(dataset().schemaName,'[','')\n                ,']','')\n                  )\n        ,'_'\n        ,trim(\n            replace(\n                replace(dataset().tableName,'[','')\n            ,']','')\n            )\n            ,'_'\n        ,formatDateTime(utcnow(),'yyyy_MM_dd_h_mm_tt')\n        ,'.parquet')",
 							"type": "Expression"
 						},
 						"folderPath": {
