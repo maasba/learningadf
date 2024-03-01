@@ -57,7 +57,7 @@
 					},
 					"activities": [
 						{
-							"name": "Copy data from tables",
+							"name": "full data from tables",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -137,6 +137,13 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "check Load Type",
+							"description": "Look at the load type and ",
+							"type": "IfCondition",
+							"dependsOn": [],
+							"userProperties": []
 						}
 					]
 				}
