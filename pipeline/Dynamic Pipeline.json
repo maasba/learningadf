@@ -148,7 +148,40 @@
 								"expression": {
 									"value": "@equals(item().loadType,'FULL')",
 									"type": "Expression"
-								}
+								},
+								"ifTrueActivities": [
+									{
+										"name": "check Load Type_copy1",
+										"description": "Look at the load type and do either an incremental or a full load",
+										"type": "IfCondition",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"expression": {
+												"value": "@equals(item().loadType,'FULL')",
+												"type": "Expression"
+											},
+											"ifTrueActivities": [
+												{
+													"name": "Copy data1_copy1",
+													"type": "Copy",
+													"dependsOn": [],
+													"policy": {
+														"timeout": "0.12:00:00",
+														"retry": 0,
+														"retryIntervalInSeconds": 30,
+														"secureOutput": false,
+														"secureInput": false
+													},
+													"userProperties": [],
+													"typeProperties": {
+														"enableStaging": false
+													}
+												}
+											]
+										}
+									}
+								]
 							}
 						}
 					]
