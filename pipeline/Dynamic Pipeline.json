@@ -169,7 +169,24 @@
 											"secureOutput": false,
 											"secureInput": false
 										},
-										"userProperties": []
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[uspUpdateWaterMark]",
+											"storedProcedureParameters": {
+												"lastModifiedTime": {
+													"value": "",
+													"type": "DateTime"
+												},
+												"tableName": {
+													"value": "",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "azuresqlconn",
+											"type": "LinkedServiceReference"
+										}
 									}
 								]
 							}
